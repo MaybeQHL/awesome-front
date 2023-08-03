@@ -1,5 +1,8 @@
-使用
 
+在线demo 
+https://maybeqhl.github.io/awesome-front/timer/demo.html
+
+使用
 ```
 const t = timer.create()
 
