@@ -15,7 +15,7 @@
 <body>
     <h2>timer 定时任务处理器</h2>
     <p>
-        执行次数 <input id="countInp" type="text" value="2" />
+        执行次数 <input id="countInp" type="text" value="5" />
         触发间隔(ms) <input id="intervalInp" type="text" value="1000">
         延迟执行(ms) <input id="delayInp" type="text" value="0">
         立即执行 <select id="imInp">
@@ -24,7 +24,7 @@
         </select>
     </p>
 
-    <p> 执行次数：
+    <p> 执行状态：
         <span id="text">等待开始...</h2>
         </span>
     </p>
@@ -34,6 +34,7 @@
     </p>
     <button id="start">开始</button>
     <button id="restart">重置</button>
+    <button id="pause">暂停</button>
     <script type="module">
         import timer from './timer.js'
         const t = timer.create();
@@ -44,8 +45,12 @@
             immediate: true
         }*/
 
-        t.setFunction(() => {
+
+        const renderStatus = () => {
             document.getElementById('text').innerText = JSON.stringify(t.getStatus());
+        }
+        t.setFunction(() => {
+            renderStatus();
             // 模拟接口延迟
             return new Promise((res) => {
                 setTimeout(() => {
@@ -56,12 +61,13 @@
 
         t.on('finish', () => {
             document.getElementById('finish').innerText = '所有任务执行完成';
+            renderStatus();
         })
 
         document.getElementById('start').addEventListener('click', () => {
 
-            document.getElementById('finish').innerText = '';
-            document.getElementById('text').innerText = '';
+            // document.getElementById('finish').innerText = '';
+            // document.getElementById('text').innerText = '';
 
             const count = document.getElementById('countInp').value;
             const interval = document.getElementById('intervalInp').value;
@@ -81,8 +87,10 @@
             t.restart();
         })
 
-
-
+        document.getElementById('pause').addEventListener('click', () => {
+            t.pause();
+            renderStatus();
+        })
     </script>
 </body>
 

@@ -1,3 +1,10 @@
+const statusEnum = {
+    inactive: 'inactive',
+    started: 'started',
+    paused: 'paused',
+    finished: 'finished'
+}
+
 /**
  * timer 定时器
  * @author maybe
@@ -32,6 +39,7 @@ function create(opts) {
     let finished = false; // 是否执行完成
     let exCount = 0;// 已经触发的次数
     let run = false;// 定时任务是否执行
+    let status = statusEnum.inactive;
     let events = {
         finish: () => { },
         exFunc: () => { }
@@ -53,22 +61,30 @@ function create(opts) {
     }
 
     const start = () => {
-        console.log('start');
+        console.log('start', '任务已开始');
 
-        // 定时任务是否执行
-        if (run) {
+        //  暂停后继续执行定时任务
+        if (status == statusEnum.paused) {
+            status = statusEnum.started;
             return;
         }
-        run = true;
+        // 执行状态重复点击无效
+        if (status == statusEnum.started) {
+            return;
+        }
+        status = statusEnum.started;
 
         const startFunc = async () => {
             if (opts.immediate) await task()
             timer = setInterval(task, opts.interval);
         }
         const task = async () => {
+            // 暂停中...
+            if (status == statusEnum.paused) {
+                return;
+            }
             if (pending) return; // 如接口请求中定时器逻辑不执行
 
-            // console.log(this.time)
             // 超过最大次数清除定时器
             if (opts.count != Infinity && exCount >= opts.count) {
                 stop();
@@ -108,11 +124,9 @@ function create(opts) {
     }
 
     const restart = () => {
-        console.log('restart');
+        console.log('restart', '任务已重置');
         // 重置次数
         exCount = 0;
-        // 重置执行状态
-        finished = false;
 
         // 重新调用
         start();
@@ -123,21 +137,26 @@ function create(opts) {
         clearInterval(timer);
         timer = null;
         pending = false;
-        finished = true;
-        run = false;
+        status = statusEnum.finished
         exCount = 0;
     }
     const getStatus = () => {
         return {
-            exCount
+            exCount,
+            status
         };
     }
     const on = (event, func) => {
-        console.log(`on:${event}`, func)
+        console.log(`on:${event}`)
         events[event] = func;
     }
     const emit = (event, ...arg) => {
         events[event]();
+    }
+
+    const pause = () => {
+        status = statusEnum.paused;
+        console.log('任务暂停中....')
     }
 
 
@@ -147,7 +166,8 @@ function create(opts) {
         setConf,
         setFunction,
         getStatus,
-        on
+        on,
+        pause
     }
 }
 
