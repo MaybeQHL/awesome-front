@@ -25,7 +25,8 @@ const t = timer.create()
 t.on('finish', () => {
  // 所有任务执行完成
 })
-t.start(); // 开始定时任务
+t.start(); // 开始/继续定时任务
 // t.restart(); // 重置定时任务
 // t.stop();// 停止定时任务
+// t.pause();// 暂停定时任务
 ```
