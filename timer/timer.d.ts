@@ -26,7 +26,7 @@ export type Config = {
     immediate: boolean
 }
 
-export type statusConf = {
+export type statusResult = {
     /**
      * 任务执行次数
      */
@@ -42,7 +42,7 @@ export function create(): {
     restart: () => any,
     setConfig: (conf: Config) => any,
     setFunction: (func: Function) => any,
-    getStatus: () => any,
+    getStatus: () => statusResult,
     on: (event: string, func: Function) => any,
     pause: () => any
 }
