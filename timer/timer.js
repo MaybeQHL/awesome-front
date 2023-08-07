@@ -17,7 +17,7 @@ const statusEnum = {
  */
 function create(opts) {
     const baseConf = {
-        desc: '任务',
+        name: '任务',
         /**
          * 触发次数
          */
@@ -52,7 +52,7 @@ function create(opts) {
         exFunc: () => { }
     }
 
-    const setConf = (conf) => {
+    const setConfig = (conf) => {
         // 合并配置
         opts = Object.assign(opts, conf);
         opts.count = Number(opts.count)
@@ -157,7 +157,7 @@ function create(opts) {
         };
     }
     const on = (event, func) => {
-        console.log(`on:${event}`)
+        printLog(`on:${event}`)
         events[event] = func;
     }
     const emit = (event, ...arg) => {
@@ -167,19 +167,19 @@ function create(opts) {
     const pause = () => {
         // 如已经完成任务终止暂停逻辑
         if (status == statusEnum.finished) return;
-        console.log('任务暂停中....')
+        printLog('任务暂停中....')
         status = statusEnum.paused;
     }
 
-    const printLog = (...args) => { 
-        console.log(`[${opts.desc}]:`,...args)
+    const printLog = (...args) => {
+        console.log(`[${opts.name}]:`, ...args)
     }
 
 
     return {
         start,
         restart,
-        setConf,
+        setConfig,
         setFunction,
         getStatus,
         on,

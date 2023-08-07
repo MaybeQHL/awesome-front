@@ -37,7 +37,9 @@
     <button id="pause">暂停</button>
     <script type="module">
         import timer from './timer.js'
-        const t = timer.create();
+        const t = timer.create({
+            name: '定时任务demo1'
+        });
         /*{
             count: 2,
             interval: 1000,
@@ -73,7 +75,7 @@
             const interval = document.getElementById('intervalInp').value;
             const im = document.getElementById('imInp').value;
             const delay = document.getElementById('delayInp').value;
-            t.setConf({
+            t.setConfig({
                 count,
                 interval,
                 immediate: im == 'true',
