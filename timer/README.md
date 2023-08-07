@@ -7,7 +7,7 @@ https://maybeqhl.github.io/awesome-front/timer/demo.html
 ```
 const t = timer.create()
 
- t.setConf({
+ t.setConfig({
     count:5,
     interval:1000,
     immediate: false,

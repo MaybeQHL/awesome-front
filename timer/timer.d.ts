@@ -7,23 +7,23 @@ export enum statusEnum {
 }
 
 export type Config = {
-    name: string,
+    name?: string,
     /**
      * 触发次数
      */
-    count: number,
+    count?: number,
     /**
      * 触发间隔(ms)
      */
-    interval: number,
+    interval?: number,
     /**
      * 延迟执行(ms)
      */
-    delay: number,
+    delay?: number,
     /**
      * 是否立即执行（一般用于定时任务）
      */
-    immediate: boolean
+    immediate?: boolean
 }
 
 export type statusResult = {
@@ -37,7 +37,7 @@ export type statusResult = {
     status: statusEnum
 }
 
-export function create(): {
+declare function create(): {
     start: () => any,
     restart: () => any,
     setConfig: (conf: Config) => any,
@@ -47,6 +47,4 @@ export function create(): {
     pause: () => any
 }
 
-export default {
-    create
-}
+export { create }
