@@ -1,3 +1,10 @@
+/**
+ * timer 定时器
+ * @author maybe
+ * @doc https://github.com/MaybeQHL/awesome-front/tree/main/timer
+ */
+
+
 const statusEnum = {
     inactive: 'inactive',
     started: 'started',
@@ -6,11 +13,11 @@ const statusEnum = {
 }
 
 /**
- * timer 定时器
- * @author maybe
+ * 创建定时器
  */
 function create(opts) {
     const baseConf = {
+        desc: '任务',
         /**
          * 触发次数
          */
@@ -51,7 +58,7 @@ function create(opts) {
         opts.count = Number(opts.count)
         opts.interval = Number(opts.interval)
         opts.delay = Number(opts.delay)
-        console.log('已更新配置', opts)
+        printLog('已更新配置', opts)
     }
     const setFunction = (func) => {
         console.log('setFunction');
@@ -61,7 +68,7 @@ function create(opts) {
     }
 
     const start = () => {
-        console.log('start', '任务已开始');
+        printLog('任务已开始');
 
         //  暂停后继续执行定时任务
         if (status == statusEnum.paused) {
@@ -95,7 +102,7 @@ function create(opts) {
             // 次数加1
             exCount++;
 
-            console.log(`次数:${exCount} 任务执行中...`)
+            printLog(`次数:${exCount} 任务执行中...`)
 
             try {
                 pending = true;
@@ -111,7 +118,8 @@ function create(opts) {
 
         // 延迟执行
         if (opts.delay > 0) {
-            console.log(`延迟执行${opts.delay}ms`)
+            // console.log(`延迟执行${opts.delay}ms`)
+            printLog(`延迟执行${opts.delay}ms`)
             setTimeout(() => {
                 startFunc();
             }, opts.delay)
@@ -124,7 +132,8 @@ function create(opts) {
     }
 
     const restart = () => {
-        console.log('restart', '任务已重置');
+        // console.log('restart', '任务已重置');
+        printLog('任务已重置')
         // 重置次数
         exCount = 0;
 
@@ -133,7 +142,8 @@ function create(opts) {
     }
 
     const stop = () => {
-        console.log('stop');
+        // console.log('stop');
+        printLog('任务已停止')
         clearInterval(timer);
         timer = null;
         pending = false;
@@ -155,8 +165,14 @@ function create(opts) {
     }
 
     const pause = () => {
-        status = statusEnum.paused;
+        // 如已经完成任务终止暂停逻辑
+        if (status == statusEnum.finished) return;
         console.log('任务暂停中....')
+        status = statusEnum.paused;
+    }
+
+    const printLog = (...args) => { 
+        console.log(`[${opts.desc}]:`,...args)
     }
 
 
