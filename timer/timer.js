@@ -80,6 +80,8 @@ function create(opts) {
             return;
         }
         status = statusEnum.started;
+        // 重置次数
+        exCount = 0;
 
         const startFunc = async () => {
             if (opts.immediate) await task()
