@@ -90,6 +90,7 @@ function create(opts) {
             if (status == statusEnum.paused) {
                 return;
             }
+            // debugger;
             if (pending) return; // 如接口请求中定时器逻辑不执行
 
             // 超过最大次数清除定时器
@@ -110,7 +111,7 @@ function create(opts) {
                 await emit('exFunc');
                 pending = false;
             } catch (error) {
-                console.error(error)
+                printErrorLog(error)
                 pending = false;
             }
 
@@ -161,7 +162,7 @@ function create(opts) {
         events[event] = func;
     }
     const emit = (event, ...arg) => {
-        events[event]();
+        return events[event]();
     }
 
     const pause = () => {
@@ -174,7 +175,14 @@ function create(opts) {
     const printLog = (...args) => {
         console.log(`[${opts.name}]:`, ...args)
     }
+    const printErrorLog = (...args) => {
+        console.error(`[${opts.name}]:`, ...args)
+    }
 
+    // const setPending = (val) => {
+    //     // printLog(val)
+    //     pending = val;
+    // }
 
     return {
         start,
@@ -183,7 +191,8 @@ function create(opts) {
         setFunction,
         getStatus,
         on,
-        pause
+        pause,
+        // setPending
     }
 }
 
