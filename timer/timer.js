@@ -149,7 +149,7 @@ function create(opts) {
         timer = null;
         pending = false;
         status = statusEnum.finished
-        exCount = 0;
+        // exCount = 0;
     }
     const getStatus = () => {
         return {
