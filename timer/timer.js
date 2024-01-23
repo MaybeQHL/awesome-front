@@ -174,6 +174,11 @@ function create(opts) {
         status = statusEnum.paused;
     }
 
+    const destroy = () => {
+        stop();
+        // events = null;
+    }
+
     const printLog = (...args) => {
         console.log(`[${opts.name}]:`, ...args)
     }
@@ -194,7 +199,8 @@ function create(opts) {
         getStatus,
         on,
         pause,
-        stop
+        stop,
+        destroy
         // setPending
     }
 }
