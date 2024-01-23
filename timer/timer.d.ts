@@ -1,4 +1,3 @@
-
 export enum statusEnum {
     inactive = 'inactive',
     started = 'started',
@@ -44,7 +43,8 @@ declare function create(): {
     setFunction: (func: Function) => any,
     getStatus: () => statusResult,
     on: (event: string, func: Function) => any,
-    pause: () => any
+    pause: () => any,
+    stop: () => any
 }
 
 export { create }
