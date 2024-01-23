@@ -44,7 +44,9 @@ declare function create(): {
     getStatus: () => statusResult,
     on: (event: string, func: Function) => any,
     pause: () => any,
-    stop: () => any
+    stop: () => any,
+    destroy: () => any,
+
 }
 
 export { create }
