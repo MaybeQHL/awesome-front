@@ -194,6 +194,7 @@ function create(opts) {
         getStatus,
         on,
         pause,
+        stop
         // setPending
     }
 }
