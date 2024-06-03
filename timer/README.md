@@ -14,7 +14,12 @@ const t = timer.create()
     delay: 0
 });
 
- t.setFunction(async() => {
+// 同步使用
+t.setFunction(()=>{
+
+})
+// 异步使用
+t.setFunction(async() => {
     // 模拟接口延迟
     return await new Promise((res) => {
             setTimeout(() => {
