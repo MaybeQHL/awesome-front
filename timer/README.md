@@ -18,7 +18,7 @@ const t = timer.create()
 t.setFunction(()=>{
 
 })
-// 异步使用
+// 异步使用（注意：异步使用会等待接口请求完成再执行下一次周期任务。）
 t.setFunction(async() => {
     // 模拟接口延迟
     return await new Promise((res) => {
